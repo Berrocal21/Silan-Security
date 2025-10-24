@@ -241,11 +241,14 @@ header nav a.active {
 /* =====================================
    Contenedor de Página Genérico
 ===================================== */
+
 .page-container {
     max-width: 1100px;
     margin: 30px auto;
     padding: 20px;
     background-color: var(--blanco);
+    position: relative; /* <-- ADD THIS */
+    z-index: 1;         /* <-- AND THIS */
 }
 
 .page-header {
@@ -1033,7 +1036,7 @@ footer {
 
 .footer-content .logo-footer img {
     height: 45px;
-    filter: brightness(0) invert(1); /* Pone el logo negro en blanco */
+  
 }
 
 .footer-content .logo-footer span {
@@ -1116,13 +1119,20 @@ footer {
         height: 70vh;
     }
 
-    .hero button {
+    .hero button { /* Estilos generales para botones en desktop */
         font-size: 2em;
         width: 50px;
         height: 50px;
+        /* Quitamos el 'left' general */
+    }
+    .prev { /* Posición específica para .prev en desktop */
         left: 20px;
     }
-    .next { right: 20px; }
+    .next { /* Posición específica para .next en desktop */
+        right: 20px;
+        /* Aseguramos que 'left' no interfiera si estaba heredado */
+        left: auto;
+    }
 
     .service-cards {
         grid-template-columns: repeat(2, 1fr); /* Dos columnas */
@@ -1145,6 +1155,7 @@ footer {
 
     .blog-layout {
         grid-template-columns: 2.5fr 1fr; /* Contenido + Sidebar */
+        align-items: start; /* <-- ADD THIS LINE */
     }
 
     .blog-grid {

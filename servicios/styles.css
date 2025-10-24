@@ -1033,7 +1033,7 @@ footer {
 
 .footer-content .logo-footer img {
     height: 45px;
-    filter: brightness(0) invert(1); /* Pone el logo negro en blanco */
+    
 }
 
 .footer-content .logo-footer span {

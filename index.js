@@ -130,3 +130,77 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
 });
+
+// --- Funcionalidad del Formulario de Comentarios ---
+  const commentForms = document.querySelectorAll('.comment-form'); // Selecciona todos los formularios de comentarios
+
+  commentForms.forEach(form => {
+    form.addEventListener('submit', (e) => {
+      e.preventDefault(); // Previene el envío real del formulario
+
+      // Obtener los datos del formulario
+      const nameInput = form.querySelector('#name');
+      const commentInput = form.querySelector('#comment');
+      const name = nameInput.value.trim();
+      const commentText = commentInput.value.trim();
+
+      // Validación simple
+      if (!name || !commentText) {
+        alert('Por favor, ingresa tu nombre y comentario.');
+        return; // Detiene la ejecución si falta algo
+      }
+
+      // Obtener la sección de comentarios padre
+      const commentsSection = form.closest('.comments-section');
+      if (!commentsSection) return; // Salir si no se encuentra la sección
+
+      // Crear el HTML para el nuevo comentario
+      const newCommentHTML = `
+        <div class="comment">
+            <img src="https://placehold.co/50x50/eeeeee/aaaaaa?text=${name.substring(0,1).toUpperCase()}" alt="Avatar" class="avatar">
+            <div class="comment-body">
+                <span class="author">${escapeHTML(name)}</span>
+                <span class="date">${new Date().toLocaleDateString('es-ES', { day: 'numeric', month: 'long', year: 'numeric'})}</span>
+                <p>${escapeHTML(commentText)}</p>
+            </div>
+        </div>
+      `;
+
+      // Insertar el nuevo comentario ANTES del formulario
+      form.insertAdjacentHTML('beforebegin', newCommentHTML);
+
+      // Limpiar el formulario
+      nameInput.value = '';
+      commentInput.value = '';
+      // Si usaste el campo de email, límpialo también:
+      // const emailInput = form.querySelector('#email');
+      // if (emailInput) emailInput.value = '';
+
+      // Opcional: Actualizar el contador de comentarios
+      const commentCountHeader = commentsSection.querySelector('h3');
+      if (commentCountHeader) {
+          // Extrae el número actual (si existe) o asume 0
+          const match = commentCountHeader.textContent.match(/\((\d+)\)/);
+          const currentCount = match ? parseInt(match[1], 10) : 0;
+          commentCountHeader.textContent = `Comentarios (${currentCount + 1})`;
+      }
+
+      // Opcional: Eliminar el mensaje "Aún no hay comentarios" si existe
+      const noCommentsMessage = commentsSection.querySelector('p[style*="italic"]');
+      if (noCommentsMessage) {
+        noCommentsMessage.remove();
+      }
+    });
+  });
+
+  // Función auxiliar para evitar inyección de HTML (XSS básico)
+  function escapeHTML(str) {
+      return str.replace(/[&<>'"]/g,
+        tag => ({
+            '&': '&amp;',
+            '<': '&lt;',
+            '>': '&gt;',
+            "'": '&#39;',
+            '"': '&quot;'
+        }[tag] || tag));
+  }
