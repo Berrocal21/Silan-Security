@@ -1189,6 +1189,7 @@ footer {
         grid-template-columns: 200px 1fr; /* Foto | Info */
         gap: 40px;
         padding: 40px;
+        margin: 40px;
     }
     .author-info {
         text-align: left;
