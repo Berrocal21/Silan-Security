@@ -204,3 +204,84 @@ document.addEventListener('DOMContentLoaded', () => {
             '"': '&quot;'
         }[tag] || tag));
   }
+
+
+  // --- Funcionalidad de Filtrado de Categorías en Blog ---
+
+  // Solo ejecuta esto si estamos en la página del blog
+  if (document.body.contains(document.querySelector('.blog-grid'))) { // Verifica si existe la rejilla de artículos
+
+    const articles = document.querySelectorAll('.blog-grid .article-card');
+    const categoryLinks = document.querySelectorAll('.blog-sidebar .sidebar-widget ul li a');
+    const blogTitle = document.querySelector('.page-header h2'); // Título "Blog de Seguridad"
+
+    // Función para filtrar artículos
+    const filterArticles = (category) => {
+      let articlesFound = 0;
+      articles.forEach(article => {
+        // Si no hay categoría (mostrar todos con href="#") O la categoría coincide
+        if (!category || article.dataset.category === category) {
+          article.style.display = 'flex'; // Muestra el artículo (flex porque así se ve en desktop)
+          articlesFound++;
+        } else {
+          article.style.display = 'none'; // Oculta el artículo
+        }
+      });
+
+      // Actualizar título (opcional)
+      if (blogTitle) {
+          if (category) {
+              // Intenta encontrar el texto del enlace de la categoría seleccionada
+              const activeLink = Array.from(categoryLinks).find(link => link.getAttribute('href') === `#${category}`);
+              blogTitle.textContent = activeLink ? `Blog: ${activeLink.textContent}` : `Blog: ${category}`;
+          } else {
+              blogTitle.textContent = 'Blog de Seguridad'; // Título original
+          }
+      }
+
+      // Mostrar mensaje si no se encuentran artículos (opcional)
+      const grid = document.querySelector('.blog-grid');
+      let noResultMessage = grid.querySelector('.no-results-message');
+      if (articlesFound === 0 && category) {
+          if (!noResultMessage) {
+              noResultMessage = document.createElement('p');
+              noResultMessage.className = 'no-results-message';
+              noResultMessage.textContent = 'No hay artículos en esta categoría.';
+              noResultMessage.style.textAlign = 'center';
+              noResultMessage.style.marginTop = '20px';
+              // Inserta el mensaje después de la rejilla o en otro lugar adecuado
+              grid.parentNode.insertBefore(noResultMessage, grid.nextSibling);
+          }
+      } else if (noResultMessage) {
+          noResultMessage.remove();
+      }
+    };
+
+    // Event listener para los clics en enlaces de categoría
+    categoryLinks.forEach(link => {
+      link.addEventListener('click', (e) => {
+        const href = link.getAttribute('href');
+
+        // Solo previene el comportamiento por defecto si es un enlace de filtro (# o #categoria) en la página actual
+        if (href.startsWith('#')) {
+          e.preventDefault(); // Evita el salto de página brusco
+          const category = href.substring(1); // Obtiene el nombre de la categoría sin el # (será vacío si es solo '#')
+          window.location.hash = category; // Actualiza el hash en la URL (opcional pero bueno para compartir/navegar)
+          // Llama a filtrar ('null' si category está vacío, que corresponde a '#')
+          filterArticles(category || null);
+        }
+        // Si es un enlace a blog.html (desde un artículo), deja que navegue normalmente
+      });
+    });
+
+    // Filtrar al cargar la página basado en el hash actual en la URL
+    const initialCategory = window.location.hash.substring(1);
+    filterArticles(initialCategory || null); // Llama a filtrar con la categoría inicial (o null si no hay hash)
+
+     // Escuchar cambios en el hash (botones atrás/adelante del navegador)
+      window.addEventListener('hashchange', () => {
+        const newCategory = window.location.hash.substring(1);
+        filterArticles(newCategory || null);
+    });
+  }
+  // --- Fin de Funcionalidad de Filtrado ---
