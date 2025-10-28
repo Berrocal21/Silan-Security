@@ -1383,3 +1383,88 @@ footer {
         border-radius: 12px;
     }
 }
+
+/* =====================================
+   Sección de Testimonios (nosotros.html)
+===================================== */
+.testimonials-section {
+    margin-top: 40px;
+    padding: 40px 20px;
+    background-color: var(--gris); /* Fondo gris claro */
+    text-align: center;
+}
+
+.testimonials-section h3 {
+    font-size: 1.8rem;
+    margin-bottom: 30px;
+    color: var(--negro);
+}
+
+.testimonials-grid {
+    display: grid;
+    grid-template-columns: 1fr; /* Una columna en móvil */
+    gap: 20px;
+    max-width: 1000px;
+    margin: 0 auto;
+    text-align: left;
+}
+
+.testimonial-card {
+    background-color: var(--blanco);
+    padding: 25px;
+    border-radius: var(--radius);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+    border-left: 5px solid var(--dorado); /* Línea dorada a la izquierda */
+    margin: 0; /* Resetea margen por defecto de blockquote */
+}
+
+.testimonial-card p {
+    font-style: italic;
+    color: var(--gris-oscuro);
+    margin-bottom: 15px;
+    position: relative;
+    padding-left: 25px; /* Espacio para comillas */
+}
+
+/* Comillas decorativas */
+.testimonial-card p::before {
+    content: '“';
+    position: absolute;
+    left: 0;
+    top: -5px;
+    font-size: 2.5rem;
+    color: var(--dorado);
+    opacity: 0.6;
+}
+
+
+.testimonial-card footer {
+    margin-top: 15px;
+    padding-top: 10px;
+    border-top: 1px solid var(--gris);
+}
+
+.testimonial-card cite {
+    font-weight: bold;
+    color: var(--negro);
+    display: block; /* Nombre en una línea */
+    font-style: normal;
+}
+
+.testimonial-card small {
+    color: var(--muted);
+    font-size: 0.9em;
+}
+
+/* Media Query para mostrar testimonios en columnas en pantallas más grandes */
+@media (min-width: 768px) {
+    .testimonials-grid {
+        grid-template-columns: repeat(2, 1fr); /* Dos columnas */
+    }
+}
+
+@media (min-width: 1024px) {
+    .testimonials-grid {
+        grid-template-columns: repeat(3, 1fr); /* Tres columnas */
+    }
+}
