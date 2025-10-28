@@ -258,7 +258,7 @@ header nav a.active {
 
 .page-header h2 {
     font-size: 2.2rem;
-    color: var(--negro);
+    color: var(--blanco);
     display: inline-block;
     padding-bottom: 8px;
     border-bottom: 4px solid var(--dorado);
@@ -1328,3 +1328,58 @@ footer {
 .btn-primary:hover{background:var(--dorado);color:#000}
 .btn-outline{border:2px solid #fff;color:#fff;margin-left:8px}
 .btn-outline:hover{background:#fff;color:#000}
+
+/* =====================================
+   Sección de Video Institucional
+===================================== */
+.video-section {
+    margin-top: 50px;
+    margin-bottom: 50px;
+    text-align: center;
+    background: linear-gradient(180deg, #111, #000);
+    padding: 50px 20px;
+    color: var(--blanco);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+}
+
+.video-section h3 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    color: var(--dorado);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    text-shadow: 0 2px 5px rgba(0,0,0,0.5);
+}
+
+/* Contenedor para centrar y estilizar el video */
+.video-section video {
+    width: 90%;
+    max-width: 900px;
+    border-radius: 20px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+    border: 3px solid var(--dorado);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Efecto hover */
+.video-section video:hover {
+    transform: scale(1.02);
+    box-shadow: 0 14px 35px rgba(0, 0, 0, 0.7);
+}
+
+/* Responsividad */
+@media (max-width: 768px) {
+    .video-section {
+        padding: 40px 15px;
+    }
+
+    .video-section h3 {
+        font-size: 1.6rem;
+    }
+
+    .video-section video {
+        width: 100%;
+        border-radius: 12px;
+    }
+}
