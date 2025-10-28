@@ -1100,6 +1100,12 @@ footer {
         display: none; /* Oculta la hamburguesa */
     }
 
+    .blog-sidebar {
+        position: sticky;
+        top: 100px; /* Ajusta este valor si es necesario */
+        align-self: start; /* Mantiene alineación superior en grid */
+    }
+    
     header nav {
         width: auto;
         max-height: none; /* Muestra el nav */
